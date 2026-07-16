@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import RequestForm from "@/components/RequestForm";
+import ServiceAreaMap from "@/components/ServiceAreaMap";
 import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
@@ -27,6 +28,10 @@ export default function RequestServicePage() {
 
       <div className="mt-8">
         <RequestForm />
+      </div>
+
+      <div className="mt-16 border-t border-black/10 pt-10">
+        <ServiceAreaMap />
       </div>
     </section>
   );

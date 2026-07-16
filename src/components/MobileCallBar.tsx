@@ -1,12 +1,14 @@
 import Link from "next/link";
 import { siteConfig } from "@/lib/site-config";
 
-// Persistent tap-to-call + estimate bar shown only on mobile, where a
-// service business needs one-tap contact. Hidden on md+ (the header already
-// shows the phone button there).
+// Persistent tap-to-call + estimate bar shown on mobile and tablet, where a
+// service business needs one-tap contact. Hidden at lg+ (the header shows
+// its own phone button there instead) — matches the breakpoint where
+// Header switches from its hamburger menu to the full inline nav, so there's
+// no width range where neither one is visible.
 export default function MobileCallBar() {
   return (
-    <div className="fixed inset-x-0 bottom-0 z-40 flex border-t border-black/10 bg-white shadow-[0_-2px_12px_rgba(0,0,0,0.1)] md:hidden">
+    <div className="fixed inset-x-0 bottom-0 z-40 flex border-t border-black/10 bg-white shadow-[0_-2px_12px_rgba(0,0,0,0.1)] lg:hidden">
       <a
         href={siteConfig.phoneHref}
         className="flex flex-1 items-center justify-center gap-2 bg-forest px-4 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-forest-light active:bg-forest-light"

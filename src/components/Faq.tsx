@@ -28,7 +28,7 @@ export default function Faq({
 
   return (
     <div>
-      <h2 className="text-xl font-bold text-forest">{heading}</h2>
+      {heading && <h2 className="text-xl font-bold text-forest">{heading}</h2>}
       <div className="mt-4 divide-y divide-black/10 border-y border-black/10">
         {items.map((item) => (
           <details key={item.q} className="group py-4">

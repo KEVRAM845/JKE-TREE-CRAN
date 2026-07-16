@@ -11,8 +11,10 @@ import { siteConfig } from "@/lib/site-config";
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/#services", label: "Services" },
+  { href: "/about", label: "About" },
   { href: "/crew", label: "Crew" },
   { href: "/gallery", label: "Gallery" },
+  { href: "/faq", label: "FAQ" },
   { href: "/request-service", label: "Request Service" },
 ];
 
@@ -61,7 +63,7 @@ export default function Header() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-5 md:flex lg:gap-8" aria-label="Primary">
+        <nav className="hidden items-center gap-5 lg:flex xl:gap-8" aria-label="Primary">
           {navLinks.map((link) => {
             const active = pathname === link.href;
             return (
@@ -85,10 +87,10 @@ export default function Header() {
           })}
         </nav>
 
-        <div className="hidden flex-shrink-0 md:block">
+        <div className="hidden flex-shrink-0 lg:block">
           <a
             href={siteConfig.phoneHref}
-            className="whitespace-nowrap rounded-full bg-orange px-4 py-2.5 text-sm font-semibold text-white transition-[background-color,transform,box-shadow] duration-200 ease-premium hover:-translate-y-0.5 hover:bg-orange-strong hover:shadow-md active:translate-y-0 active:scale-[0.98] active:duration-100 lg:px-5"
+            className="whitespace-nowrap rounded-full bg-orange px-5 py-2.5 text-sm font-semibold text-white transition-[background-color,transform,box-shadow] duration-200 ease-premium hover:-translate-y-0.5 hover:bg-orange-strong hover:shadow-md active:translate-y-0 active:scale-[0.98] active:duration-100"
           >
             Call {siteConfig.phone}
           </a>
@@ -96,7 +98,7 @@ export default function Header() {
 
         <button
           type="button"
-          className="flex h-10 w-10 items-center justify-center rounded-md text-forest transition-colors hover:bg-black/5 md:hidden"
+          className="flex h-10 w-10 items-center justify-center rounded-md text-forest transition-colors hover:bg-black/5 lg:hidden"
           aria-expanded={menuOpen}
           aria-controls="mobile-menu"
           aria-label={menuOpen ? "Close menu" : "Open menu"}
@@ -126,7 +128,7 @@ export default function Header() {
           <motion.div
             key="mobile-menu"
             id="mobile-menu"
-            className="overflow-hidden border-t border-black/10 bg-white md:hidden"
+            className="overflow-hidden border-t border-black/10 bg-white lg:hidden"
             initial={shouldReduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
             animate={shouldReduceMotion ? { opacity: 1 } : { height: "auto", opacity: 1 }}
             exit={shouldReduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}

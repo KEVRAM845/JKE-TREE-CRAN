@@ -582,8 +582,8 @@ export default function RequestForm() {
       <div className="space-y-3">
         <Button
           type="submit"
-          disabled={status === "submitting"}
-          className="w-full disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+          loading={status === "submitting"}
+          className="w-full sm:w-auto"
         >
           {status === "submitting" ? "Sending Your Request…" : "Get My Free Estimate"}
         </Button>

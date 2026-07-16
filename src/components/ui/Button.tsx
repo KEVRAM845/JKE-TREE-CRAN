@@ -4,7 +4,7 @@ import type { ComponentProps, ReactNode } from "react";
 type Variant = "primary" | "outline" | "outlineLight" | "forest" | "white";
 
 const base =
-  "inline-flex items-center justify-center rounded-full px-6 py-3.5 text-base font-semibold transition-[background-color,color,border-color,transform,box-shadow] duration-200 ease-premium hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] active:duration-100";
+  "inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-base font-semibold transition-[background-color,color,border-color,transform,box-shadow,opacity] duration-200 ease-premium hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] active:duration-100 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50";
 
 // These map 1:1 to the button styles already used across the site, so adopting
 // <Button> introduces no visual change beyond a subtle shadow lift on hover —
@@ -73,16 +73,48 @@ export function ButtonAnchor({
   );
 }
 
-/** Real <button> (form actions, etc.). */
+/** Real <button> (form actions, etc.). Pass `loading` for async submits —
+ *  it shows a spinner, forces `disabled`, and sets `aria-busy` so screen
+ *  readers announce the pending state. */
 export function Button({
   variant = "primary",
   fullWidth = false,
+  loading = false,
   className,
   children,
+  disabled,
   ...rest
-}: PlainButtonProps) {
+}: PlainButtonProps & { loading?: boolean }) {
   return (
-    <button className={classes(variant, fullWidth, className)} {...rest}>
+    <button
+      className={classes(variant, fullWidth, className)}
+      disabled={disabled || loading}
+      aria-busy={loading || undefined}
+      {...rest}
+    >
+      {loading && (
+        <svg
+          className="h-4 w-4 flex-shrink-0 animate-spin"
+          viewBox="0 0 24 24"
+          fill="none"
+          aria-hidden="true"
+        >
+          <circle
+            className="opacity-25"
+            cx="12"
+            cy="12"
+            r="9"
+            stroke="currentColor"
+            strokeWidth="3"
+          />
+          <path
+            d="M21 12a9 9 0 0 0-9-9"
+            stroke="currentColor"
+            strokeWidth="3"
+            strokeLinecap="round"
+          />
+        </svg>
+      )}
       {children}
     </button>
   );

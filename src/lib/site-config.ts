@@ -42,6 +42,8 @@ export const siteConfig = {
   tagline: "Crane, Bucket Truck & Tree Removal Specialists",
   phone: "845-721-0772",
   phoneHref: "tel:+18457210772",
+  /** Same verified number as phoneHref — used for the "Text Us" action. */
+  smsHref: "sms:+18457210772",
   email: "info@jketreeandcrane.com",
   usdot: "3497970",
   serviceArea: "Dutchess, Putnam, Orange, and Ulster Counties",
@@ -79,6 +81,39 @@ export const siteConfig = {
   geo: null as { latitude: number; longitude: number } | null,
   /** Empty = omitted from schema. */
   hours: [] as OpeningHours[],
+
+  // ---- Service-area map (R4) ------------------------------------------------
+  // Powers the shared <ServiceAreaMap> component. Falls back to a broad
+  // county-level map (no pin) when no verified address exists yet — never
+  // guess a specific business location. Once `address` above is confirmed,
+  // set `useAddressPin: true` so the map centers on the real pin instead.
+  serviceAreaMap: {
+    /** Show a precise pin at `address` instead of the broad county view. */
+    useAddressPin: false,
+    /** Real, confirmed Google Maps place link — for the "Open in Google
+     *  Maps" button. null = falls back to a generic maps search for the
+     *  service area text (still accurate, just not a specific pin). */
+    googleMapsUrl: null as string | null,
+  },
+
+  // ---- About page statistics (R5). Every field defaults to null/hidden ----
+  // until the business owner confirms real numbers — see DEPLOYMENT.md.
+  // The data structure exists so the About page can light these up with a
+  // one-line config change once verified; nothing here is published yet.
+  aboutStats: {
+    show: false,
+    customersServed: null as string | null, // e.g. "400+"
+    teamSize: null as string | null, // e.g. "16+ professionals"
+    yearsExperience: null as string | null, // e.g. "15+ years"
+  },
+
+  // ---- Jobber request-form integration (R6). null = not connected yet -----
+  // See DEPLOYMENT.md for what's required to populate this. Until it's set,
+  // every "Request a Free Estimate" action (including the floating widget)
+  // routes to the site's own /request-service form instead.
+  jobber: {
+    requestFormUrl: null as string | null,
+  },
 
   // ---- Service areas (R3 — ready for future /service-areas pages) ----------
   // Real towns only, e.g. ["Poughkeepsie, NY", "Beacon, NY"]. Empty = hidden.
@@ -119,3 +154,44 @@ export const siteConfig = {
 };
 
 export type SiteConfig = typeof siteConfig;
+
+/**
+ * Where a "Request a Free Estimate" action should go. Returns the real
+ * Jobber request-form URL once `jobber.requestFormUrl` is set; falls back to
+ * the site's own form until then. Use this instead of hardcoding
+ * "/request-service" in new CTAs so the whole site switches over in one
+ * place the moment Jobber is connected.
+ */
+export function getEstimateHref(): string {
+  return siteConfig.jobber.requestFormUrl ?? "/request-service";
+}
+
+/**
+ * Google Maps link for the "Open in Google Maps" button. Prefers a real,
+ * confirmed place URL; falls back to a text search for the general service
+ * area (still useful, just not a specific pin) when no address is verified.
+ */
+export function getGoogleMapsUrl(): string {
+  if (siteConfig.serviceAreaMap.googleMapsUrl) {
+    return siteConfig.serviceAreaMap.googleMapsUrl;
+  }
+  const query =
+    siteConfig.serviceAreaMap.useAddressPin && siteConfig.address
+      ? `${siteConfig.address.street}, ${siteConfig.address.city}, ${siteConfig.address.state} ${siteConfig.address.zip}`
+      : siteConfig.serviceArea;
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+}
+
+/**
+ * Embeddable Google Maps iframe URL (no API key required — the classic
+ * `output=embed` form). Centers on the real address once confirmed and
+ * `useAddressPin` is enabled; otherwise shows a broad view of the service
+ * area rather than guessing a specific location.
+ */
+export function getMapEmbedUrl(): string {
+  const query =
+    siteConfig.serviceAreaMap.useAddressPin && siteConfig.address
+      ? `${siteConfig.address.street}, ${siteConfig.address.city}, ${siteConfig.address.state} ${siteConfig.address.zip}`
+      : siteConfig.serviceArea;
+  return `https://www.google.com/maps?q=${encodeURIComponent(query)}&output=embed`;
+}

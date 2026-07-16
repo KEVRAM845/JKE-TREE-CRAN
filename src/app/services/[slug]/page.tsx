@@ -6,6 +6,8 @@ import CtaBanner from "@/components/CtaBanner";
 import Credentials from "@/components/Credentials";
 import Faq from "@/components/Faq";
 import MediaVideo from "@/components/MediaVideo";
+import ServiceAreaMap from "@/components/ServiceAreaMap";
+import ServiceJsonLd from "@/components/ServiceJsonLd";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { ButtonLink, ButtonAnchor } from "@/components/ui/Button";
 import { StaggerContainer, StaggerItem } from "@/components/motion/Stagger";
@@ -238,7 +240,12 @@ export default async function ServicePage({
         </div>
       </Section>
 
+      <Section tone="muted" className="!pt-0">
+        <ServiceAreaMap heading={`Areas We Serve for ${service.title}`} />
+      </Section>
+
       <CtaBanner />
+      <ServiceJsonLd service={service} />
     </>
   );
 }

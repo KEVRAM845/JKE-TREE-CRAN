@@ -4,6 +4,7 @@ import { MotionConfig } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MobileCallBar from "@/components/MobileCallBar";
+import FloatingContactWidget from "@/components/FloatingContactWidget";
 import LocalBusinessJsonLd from "@/components/JsonLd";
 import { siteConfig } from "@/lib/site-config";
 import { heroImage } from "@/lib/media";
@@ -84,6 +85,7 @@ export default function RootLayout({
           </main>
           <Footer />
           <MobileCallBar />
+          <FloatingContactWidget />
         </MotionConfig>
         <LocalBusinessJsonLd />
       </body>
