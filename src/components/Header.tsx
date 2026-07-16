@@ -15,6 +15,7 @@ const navLinks = [
   { href: "/crew", label: "Crew" },
   { href: "/gallery", label: "Gallery" },
   { href: "/faq", label: "FAQ" },
+  { href: "/contact", label: "Contact" },
   { href: "/request-service", label: "Request Service" },
 ];
 
@@ -149,6 +150,13 @@ export default function Header() {
                 <p className="px-2 pb-2 text-xs font-semibold uppercase tracking-wide text-foreground/60">
                   Services
                 </p>
+                <Link
+                  href="/#large-project-crew"
+                  className="block rounded-md px-2 py-2.5 text-sm font-semibold text-forest transition-colors hover:bg-black/5"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Large Projects
+                </Link>
                 {services.map((service) => (
                   <Link
                     key={service.slug}

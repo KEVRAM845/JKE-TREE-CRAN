@@ -44,6 +44,10 @@ export const siteConfig = {
   phoneHref: "tel:+18457210772",
   /** Same verified number as phoneHref — used for the "Text Us" action. */
   smsHref: "sms:+18457210772",
+  /** Confirmed additional line — labeled "Main Office" / "Additional Contact"
+   *  wherever both numbers are shown together. Does not replace `phone`. */
+  phoneSecondary: "845-337-7203",
+  phoneSecondaryHref: "tel:+18453377203",
   email: "info@jketreeandcrane.com",
   usdot: "3497970",
   serviceArea: "Dutchess, Putnam, Orange, and Ulster Counties",
@@ -63,36 +67,43 @@ export const siteConfig = {
 
   // ---- Credentials (R2) ----------------------------------------------------
   // Regulated claims (licensed/insured) are OFF by default so nothing is
-  // asserted until you confirm it. Flip to true once verified.
+  // asserted until confirmed. Both flipped true per explicit business-owner
+  // confirmation (Large Project / Trust Signals phase) — no policy number or
+  // certificate is published alongside the claim.
   credentials: {
-    licensed: false, // set true (optionally add licenseNumber) once confirmed
+    licensed: true,
     licenseNumber: null as string | null,
-    insured: false, // set true to show a "Fully Insured" badge
+    insured: true,
     locallyOwned: true, // family/locally owned — already an affirmed claim
     showUsdot: true, // display the (real) USDOT number
     /** Year the business started, e.g. 2015 → "Established 2015". null = hidden. */
     yearEstablished: null as number | null,
-    /** e.g. ["ISA Certified Arborist", "TCIA Member"]. Empty = hidden. */
+    /** e.g. ["ISA Certified Arborist", "TCIA Member"]. Empty = hidden — no
+     *  certification is claimed until separately verified. */
     certifications: [] as string[],
   },
 
-  // ---- Physical location (LocalBusiness schema). null = omitted -----------
-  address: null as BusinessAddress | null,
+  // ---- Physical location (LocalBusiness schema) ----------------------------
+  // Confirmed business address (Large Project / Trust Signals phase).
+  address: {
+    street: "1131 State Route 55, Suite 5",
+    city: "LaGrange",
+    state: "NY",
+    zip: "12540",
+  } as BusinessAddress | null,
   geo: null as { latitude: number; longitude: number } | null,
   /** Empty = omitted from schema. */
   hours: [] as OpeningHours[],
 
   // ---- Service-area map (R4) ------------------------------------------------
-  // Powers the shared <ServiceAreaMap> component. Falls back to a broad
-  // county-level map (no pin) when no verified address exists yet — never
-  // guess a specific business location. Once `address` above is confirmed,
-  // set `useAddressPin: true` so the map centers on the real pin instead.
+  // Powers the shared <ServiceAreaMap> component. Now centers on the
+  // confirmed address pin rather than the broad county view.
   serviceAreaMap: {
     /** Show a precise pin at `address` instead of the broad county view. */
-    useAddressPin: false,
+    useAddressPin: true,
     /** Real, confirmed Google Maps place link — for the "Open in Google
-     *  Maps" button. null = falls back to a generic maps search for the
-     *  service area text (still accurate, just not a specific pin). */
+     *  Maps" button. null = falls back to a generated maps search using
+     *  `address` (still accurate, just not a saved place link). */
     googleMapsUrl: null as string | null,
   },
 
@@ -148,8 +159,18 @@ export const siteConfig = {
   // ---- Social / profile links (schema sameAs). null values are omitted -----
   social: {
     google: null as string | null,
-    facebook: null as string | null,
+    facebook: "https://www.facebook.com/share/1dN7cSgYSp/?mibextid=wwXIfr",
     instagram: null as string | null,
+  },
+
+  // ---- Large Project Daily Crew pricing (R7) --------------------------------
+  // Confirmed business policy — displayed on the Large Project Daily Crew
+  // section and referenced (compactly) near estimate-request CTAs sitewide.
+  // Not a project maximum: specialized crane work, unusually complex trees,
+  // and multi-day projects are quoted separately after an on-site assessment.
+  largeProjectCrew: {
+    dailyRate: 7500,
+    minimumProject: 1200,
   },
 };
 

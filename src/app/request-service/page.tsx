@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import RequestForm from "@/components/RequestForm";
 import ServiceAreaMap from "@/components/ServiceAreaMap";
+import TrustSignals from "@/components/TrustSignals";
+import MinimumProjectNotice from "@/components/MinimumProjectNotice";
 import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
@@ -25,6 +27,9 @@ export default function RequestServicePage() {
         </a>
         .
       </p>
+
+      <TrustSignals className="mt-8" />
+      <MinimumProjectNotice className="mt-6" />
 
       <div className="mt-8">
         <RequestForm />

@@ -21,10 +21,16 @@ export default function Credentials({
   const c = siteConfig.credentials;
   const items: string[] = [];
 
-  if (c.licensed) {
-    items.push(c.licenseNumber ? `Licensed #${c.licenseNumber}` : "Licensed");
+  if (c.licensed && c.insured && !c.licenseNumber) {
+    // Combined into one item when both are true and there's no license
+    // number to show — avoids two near-duplicate pills.
+    items.push("Licensed & Insured");
+  } else {
+    if (c.licensed) {
+      items.push(c.licenseNumber ? `Licensed #${c.licenseNumber}` : "Licensed");
+    }
+    if (c.insured) items.push("Fully Insured");
   }
-  if (c.insured) items.push("Fully Insured");
   if (c.locallyOwned) items.push("Locally Owned & Operated");
   if (c.showUsdot && siteConfig.usdot) items.push(`USDOT #${siteConfig.usdot}`);
   if (c.yearEstablished) items.push(`Established ${c.yearEstablished}`);

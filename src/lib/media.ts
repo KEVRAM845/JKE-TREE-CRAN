@@ -63,7 +63,7 @@ const heroCraneMaple: ImageAsset = {
   orientation: "portrait",
 };
 
-const stumpGrinderFreshCut: ImageAsset = {
+export const stumpGrinderFreshCut: ImageAsset = {
   type: "image",
   src: "/images/stump-grinder-fresh-cut.jpg",
   alt: "Vermeer stump grinder positioned beside a large, freshly cut tree stump",
@@ -144,7 +144,7 @@ const stumpGrindingYard: ImageAsset = {
   orientation: "portrait",
 };
 
-const bucketTruckHazard: ImageAsset = {
+export const bucketTruckHazard: ImageAsset = {
   type: "image",
   src: "/images/bucket-truck-hazard-removal.jpg",
   alt: "JKE bucket truck crew removing a large hazardous tree",
@@ -268,7 +268,7 @@ const blueCrane: ImageAsset = {
   focalPosition: "50% 38%",
 };
 
-const loaderMovingLog: ImageAsset = {
+export const loaderMovingLog: ImageAsset = {
   type: "image",
   src: "/images/loader-moving-log.jpg",
   alt: "A compact grapple loader carrying a large cut log across a job site",
@@ -295,7 +295,7 @@ const greyBucketTree: ImageAsset = {
   orientation: "square",
 };
 
-const whiteTruckChipper: ImageAsset = {
+export const whiteTruckChipper: ImageAsset = {
   type: "image",
   src: "/images/white-truck-chipper.jpg",
   alt: "JKE's chip truck and Vermeer chipper staged on a job site",
@@ -303,7 +303,7 @@ const whiteTruckChipper: ImageAsset = {
   orientation: "landscape",
 };
 
-const workerNextToChipper: ImageAsset = {
+export const workerNextToChipper: ImageAsset = {
   type: "image",
   src: "/images/worker-next-to-chipper.jpg",
   alt: "A JKE crew member feeding a cut log into a wood chipper",

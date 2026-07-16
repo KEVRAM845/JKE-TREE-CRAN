@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Faq from "@/components/Faq";
+import MinimumProjectNotice from "@/components/MinimumProjectNotice";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { ButtonLink, ButtonAnchor } from "@/components/ui/Button";
 import { generalFaqs } from "@/lib/faqs";
@@ -28,6 +29,8 @@ export default function FaqPage() {
         <div className="mt-8">
           <Faq items={generalFaqs} heading="" />
         </div>
+
+        <MinimumProjectNotice variant="full" className="mt-10" />
       </section>
 
       <Section tone="muted" className="text-center">

@@ -5,6 +5,7 @@ import { ButtonLink, ButtonAnchor } from "@/components/ui/Button";
 import { SlideIn } from "@/components/motion/SlideIn";
 import { StaggerContainer, StaggerItem } from "@/components/motion/Stagger";
 import ServiceAreaMap from "@/components/ServiceAreaMap";
+import TrustSignals from "@/components/TrustSignals";
 import { crewTeamPhoto } from "@/lib/media";
 import { getEstimateHref, siteConfig } from "@/lib/site-config";
 
@@ -38,6 +39,9 @@ export default function AboutPage() {
             routine crews don&apos;t carry — cranes, bucket trucks, and the
             rigging experience to take down what other companies turn away.
           </p>
+        </SlideIn>
+        <SlideIn className="mt-8">
+          <TrustSignals className="mx-auto max-w-xl" />
         </SlideIn>
       </section>
 

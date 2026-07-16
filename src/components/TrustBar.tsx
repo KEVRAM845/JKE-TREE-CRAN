@@ -19,13 +19,29 @@ const iconProps = {
   "aria-hidden": true,
 };
 
+const shieldCheckIcon = (
+  <svg {...iconProps}>
+    <path d="M12 21c5-1.5 8-5 8-9.5V5.5L12 3 4 5.5v6c0 4.5 3 8 8 9.5Z" />
+    <path d="m9 11.5 2 2 4-4.5" />
+  </svg>
+);
+
 export default function TrustBar() {
   const { credentials } = siteConfig;
+  const bothLicensedAndInsured = credentials.licensed && credentials.insured;
 
   const trustPoints: TrustPoint[] = [
+    // Combined into one badge when both are true (the common case) so the
+    // bar reads as one clear trust statement instead of two near-duplicate
+    // badges — falls back to individual badges if only one is confirmed.
+    {
+      label: "Licensed & Insured",
+      show: bothLicensedAndInsured,
+      icon: shieldCheckIcon,
+    },
     {
       label: "Licensed",
-      show: credentials.licensed,
+      show: credentials.licensed && !bothLicensedAndInsured,
       icon: (
         <svg {...iconProps}>
           <path d="m9 12.75 2.25 2.25 3.75-4.5" />
@@ -35,13 +51,8 @@ export default function TrustBar() {
     },
     {
       label: "Insured",
-      show: credentials.insured,
-      icon: (
-        <svg {...iconProps}>
-          <path d="M12 21c5-1.5 8-5 8-9.5V5.5L12 3 4 5.5v6c0 4.5 3 8 8 9.5Z" />
-          <path d="m9 11.5 2 2 4-4.5" />
-        </svg>
-      ),
+      show: credentials.insured && !bothLicensedAndInsured,
+      icon: shieldCheckIcon,
     },
     {
       label: "Free Estimates",

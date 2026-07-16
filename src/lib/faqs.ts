@@ -70,4 +70,10 @@ export const generalFaqs: FaqItem[] = [
     q: "How does scheduling work after the estimate?",
     a: "Once you've had your free estimate, there's no pressure to move forward right away. If you'd like to go ahead, we find a time that works for your property and schedule the job.",
   },
+  {
+    q: "Is there a minimum project amount?",
+    a: `Projects are subject to a $${siteConfig.largeProjectCrew.minimumProject.toLocaleString(
+      "en-US",
+    )} minimum investment so we can provide the experienced crew, specialized equipment, and professional service each job requires.`,
+  },
 ];

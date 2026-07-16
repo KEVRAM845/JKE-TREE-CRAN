@@ -3,7 +3,7 @@ import Link from "next/link";
 import Credentials from "@/components/Credentials";
 import SocialLinks from "@/components/SocialLinks";
 import { services } from "@/lib/services";
-import { siteConfig } from "@/lib/site-config";
+import { getGoogleMapsUrl, siteConfig } from "@/lib/site-config";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -31,6 +31,19 @@ export default function Footer() {
             Beacon, Cold Spring, Carmel, Mahopac, Brewster, Newburgh, Middletown, and
             Kingston.
           </p>
+          {siteConfig.address && (
+            <a
+              href={getGoogleMapsUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 block text-sm text-white/70 transition-colors hover:text-orange-light"
+            >
+              {siteConfig.address.street}
+              <br />
+              {siteConfig.address.city}, {siteConfig.address.state}{" "}
+              {siteConfig.address.zip}
+            </a>
+          )}
           <Credentials variant="row" onDark className="mt-3" />
         </div>
 
@@ -39,6 +52,14 @@ export default function Footer() {
             Services
           </h2>
           <ul className="mt-3 space-y-2">
+            <li>
+              <Link
+                href="/#large-project-crew"
+                className="text-sm text-white/80 transition-colors hover:text-orange-light"
+              >
+                Large Project Daily Crew
+              </Link>
+            </li>
             {services.map((service) => (
               <li key={service.slug}>
                 <Link
@@ -86,15 +107,29 @@ export default function Footer() {
 
         <div>
           <h2 className="text-sm font-semibold uppercase tracking-wide text-white/60">
-            Contact
+            <Link href="/contact" className="transition-colors hover:text-orange-light">
+              Contact
+            </Link>
           </h2>
           <div className="mt-3 space-y-2 text-sm text-white/80">
             <a
               href={siteConfig.phoneHref}
               className="block transition-colors hover:text-orange-light"
             >
-              {siteConfig.phone}
+              {siteConfig.phone}{" "}
+              {siteConfig.phoneSecondary && (
+                <span className="text-white/50">(Main Office)</span>
+              )}
             </a>
+            {siteConfig.phoneSecondary && (
+              <a
+                href={siteConfig.phoneSecondaryHref}
+                className="block transition-colors hover:text-orange-light"
+              >
+                {siteConfig.phoneSecondary}{" "}
+                <span className="text-white/50">(Additional Contact)</span>
+              </a>
+            )}
             <a
               href={`mailto:${siteConfig.email}`}
               className="block transition-colors hover:text-orange-light"

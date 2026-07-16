@@ -8,6 +8,7 @@ import Faq from "@/components/Faq";
 import MediaVideo from "@/components/MediaVideo";
 import ServiceAreaMap from "@/components/ServiceAreaMap";
 import ServiceJsonLd from "@/components/ServiceJsonLd";
+import MinimumProjectNotice from "@/components/MinimumProjectNotice";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { ButtonLink, ButtonAnchor } from "@/components/ui/Button";
 import { StaggerContainer, StaggerItem } from "@/components/motion/Stagger";
@@ -103,6 +104,7 @@ export default async function ServicePage({
         </div>
 
         <Credentials className="mt-8" />
+        <MinimumProjectNotice className="mt-4" />
 
         <h2 className="mt-12 text-xl font-bold text-forest">What&apos;s Included</h2>
         <ul className="mt-4 grid gap-4 sm:grid-cols-2">

@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MobileCallBar from "@/components/MobileCallBar";
 import FloatingContactWidget from "@/components/FloatingContactWidget";
+import FloatingLargeProjectWidget from "@/components/FloatingLargeProjectWidget";
 import LocalBusinessJsonLd from "@/components/JsonLd";
 import { siteConfig } from "@/lib/site-config";
 import { heroImage } from "@/lib/media";
@@ -86,6 +87,7 @@ export default function RootLayout({
           <Footer />
           <MobileCallBar />
           <FloatingContactWidget />
+          <FloatingLargeProjectWidget />
         </MotionConfig>
         <LocalBusinessJsonLd />
       </body>

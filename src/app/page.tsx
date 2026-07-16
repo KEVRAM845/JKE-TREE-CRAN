@@ -4,12 +4,14 @@ import CtaBanner from "@/components/CtaBanner";
 import HeroContent from "@/components/HeroContent";
 import TrustBar from "@/components/TrustBar";
 import CrewPreview from "@/components/sections/CrewPreview";
+import LargeProjectCrew from "@/components/sections/LargeProjectCrew";
 import EmergencyStorm from "@/components/sections/EmergencyStorm";
 import FeaturedProject from "@/components/sections/FeaturedProject";
 import VideoReel from "@/components/sections/VideoReel";
 import EquipmentShowcase from "@/components/sections/EquipmentShowcase";
 import HowItWorks from "@/components/sections/HowItWorks";
 import Reviews from "@/components/sections/Reviews";
+import MinimumProjectNotice from "@/components/MinimumProjectNotice";
 import { SlideIn } from "@/components/motion/SlideIn";
 import { StaggerContainer } from "@/components/motion/Stagger";
 import { Section } from "@/components/ui/Section";
@@ -87,7 +89,10 @@ export default function Home() {
             );
           })}
         </StaggerContainer>
+        <MinimumProjectNotice className="mt-10 text-center" />
       </Section>
+
+      <LargeProjectCrew />
 
       <Section tone="muted" className="grid gap-10 md:grid-cols-2 md:items-center">
         <SlideIn className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl sm:aspect-[3/4]">
