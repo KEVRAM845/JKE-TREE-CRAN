@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+:root {
+  /* Warm, near-white neutral instead of pure white — cuts glare and lets
+     white cards/media surfaces (bg-white) stand out with real contrast. */
+  --background: #f8f6f2;
+  --foreground: #1a1a1a;
+
+  --color-brand-forest: #16321f;
+  --color-brand-forest-light: #234a2d;
+  /* Primary orange, darkened so white text on it meets WCAG AA (~4.6:1). */
+  --color-brand-orange: #c2540e;
+  /* Darker still — used for hover on light backgrounds so contrast holds. */
+  --color-brand-orange-strong: #a5460b;
+  /* Lighter accent — only for use on the dark (forest) background. */
+  --color-brand-orange-light: #f2803a;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-forest: var(--color-brand-forest);
+  --color-forest-light: var(--color-brand-forest-light);
+  --color-orange: var(--color-brand-orange);
+  --color-orange-strong: var(--color-brand-orange-strong);
+  --color-orange-light: var(--color-brand-orange-light);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-display);
+  /* Shared "premium" easing (a smooth expo-out curve) for every hover/press
+     transition site-wide — generates the `ease-premium` utility. Framer
+     Motion's scroll-reveal animations use the identical curve, defined once
+     in src/lib/motion.ts, so CSS hovers and JS-driven reveals move the same
+     way instead of each defaulting to their own generic "ease". */
+  --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+@layer base {
+  /* Condensed display face for major headings; body stays Inter. */
+  h1,
+  h2 {
+    font-family: var(--font-display), var(--font-inter), system-ui, sans-serif;
+    letter-spacing: -0.01em;
+  }
+
+  /* Nicer line breaks — no layout cost. */
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Anchor jumps (e.g. /#services) clear the sticky header. */
+  :target {
+    scroll-margin-top: 5rem;
+  }
+
+  /* Keyboard-only focus indicator (does not affect mouse/touch users). */
+  :focus-visible {
+    outline: 2px solid var(--color-brand-orange);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}

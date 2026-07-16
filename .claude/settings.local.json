@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls -la \"C:\\\\Users\\\\KEV845\\\\OneDrive\\\\Desktop\\\\JKE TREE & CRANE\" 2>&1; echo \"---\"; find \"C:\\\\Users\\\\KEV845\\\\OneDrive\\\\Desktop\" -maxdepth 2 2>&1)",
+      "PowerShell(node -v)",
+      "PowerShell(npm -v)",
+      "PowerShell(Get-Command node)",
+      "PowerShell(Get-Command npm)",
+      "PowerShell(Get-Command npx -ErrorAction SilentlyContinue)",
+      "PowerShell([System.Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\))"
+    ]
+  }
+}
