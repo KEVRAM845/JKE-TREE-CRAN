@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { Section } from "@/components/ui/Section";
 import { ButtonLink, ButtonAnchor } from "@/components/ui/Button";
 import { SlideIn } from "@/components/motion/SlideIn";
@@ -12,7 +13,7 @@ import { getEstimateHref, siteConfig } from "@/lib/site-config";
 export const metadata: Metadata = {
   title: "About Us",
   description:
-    "JKE Tree & Crane is a locally operated tree removal, trimming, and crane service across the Hudson Valley — the same experienced crew, start to finish, on every job.",
+    "JKE Tree & Crane is a locally operated tree removal, trimming, and crane service across the Hudson Valley — experienced in-house crews and specialized equipment, start to finish, on every job.",
   alternates: { canonical: "/about" },
 };
 
@@ -20,7 +21,7 @@ const missionPoints = [
   "Plan every job before the first cut — drop zones, rigging, and equipment placement",
   "Protect what's around the tree as carefully as we handle the tree itself",
   "Communicate clearly with property owners from the first call to final cleanup",
-  "Show up as the same dependable crew, job after job",
+  "Show up with experienced in-house crews and specialized equipment, job after job",
 ];
 
 export default function AboutPage() {
@@ -52,6 +53,7 @@ export default function AboutPage() {
               src={crewTeamPhoto.src}
               alt={crewTeamPhoto.alt}
               fill
+              priority
               sizes="(min-width: 768px) 50vw, 100vw"
               className="object-cover"
             />
@@ -72,11 +74,18 @@ export default function AboutPage() {
               sections rather than guessing.
             </p>
             <p className="mt-4 text-foreground/70">
-              It&apos;s the same experienced crew on every job, not a
-              rotating cast of subcontractors. Before the first cut, we walk
-              the property, plan the drop zone, and protect your lawn,
-              driveway, and structures — and the job isn&apos;t finished
-              until the site is cleaned up and the debris is hauled away.
+              We work with experienced in-house crews and specialized
+              equipment, not a rotating cast of subcontractors. Before the
+              first cut, we walk the property, plan the drop zone, and
+              protect your lawn, driveway, and structures — and the job
+              isn&apos;t finished until the site is cleaned up and the
+              debris is hauled away.
+            </p>
+            <p className="mt-4 text-foreground/70">
+              <Link href="/crew" className="font-semibold text-forest underline decoration-forest/30 underline-offset-2 hover:text-orange">
+                Meet the crew
+              </Link>{" "}
+              behind every job.
             </p>
           </SlideIn>
         </div>

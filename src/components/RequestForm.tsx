@@ -24,17 +24,22 @@ interface RequestFormValues {
 type RequiredField = keyof RequestFormValues;
 type FormErrors = Partial<Record<RequiredField | "photos", string>>;
 
-const initialValues: RequestFormValues = {
-  name: "",
-  phone: "",
-  email: "",
-  address: "",
-  serviceType: "",
-  description: "",
-  urgency: "",
-  contactMethod: "",
-  consent: false,
-};
+const LARGE_PROJECT_SERVICE_VALUE = "large-project-assessment";
+const LARGE_PROJECT_SERVICE_LABEL = "Large Project Daily Crew / Property Assessment";
+
+function makeInitialValues(serviceType: string): RequestFormValues {
+  return {
+    name: "",
+    phone: "",
+    email: "",
+    address: "",
+    serviceType,
+    description: "",
+    urgency: "",
+    contactMethod: "",
+    consent: false,
+  };
+}
 
 const REQUIRED_FIELDS: RequiredField[] = [
   "name",
@@ -99,8 +104,18 @@ function validateField(
   }
 }
 
-export default function RequestForm() {
-  const [values, setValues] = useState<RequestFormValues>(initialValues);
+interface RequestFormProps {
+  /** Preselects the "Service Needed" field — e.g. from a ?service= query
+   *  param when a visitor arrives via the Large Project Assessment CTA. */
+  initialService?: string;
+}
+
+export default function RequestForm({ initialService }: RequestFormProps = {}) {
+  const preselectedService =
+    initialService === "large-project" ? LARGE_PROJECT_SERVICE_VALUE : "";
+  const [values, setValues] = useState<RequestFormValues>(
+    makeInitialValues(preselectedService),
+  );
   const [photos, setPhotos] = useState<File[]>([]);
   const [photoPreviews, setPhotoPreviews] = useState<string[]>([]);
   const [errors, setErrors] = useState<FormErrors>({});
@@ -209,7 +224,7 @@ export default function RequestForm() {
   }
 
   function handleReset() {
-    setValues(initialValues);
+    setValues(makeInitialValues(preselectedService));
     photoPreviews.forEach((url) => URL.revokeObjectURL(url));
     setPhotos([]);
     setPhotoPreviews([]);
@@ -399,6 +414,7 @@ export default function RequestForm() {
           className={inputClass(Boolean(errors.serviceType))}
         >
           <option value="">Select a service</option>
+          <option value={LARGE_PROJECT_SERVICE_VALUE}>{LARGE_PROJECT_SERVICE_LABEL}</option>
           {services.map((service) => (
             <option key={service.slug} value={service.slug}>
               {service.title}
@@ -407,6 +423,29 @@ export default function RequestForm() {
           <option value="other">Other / Not sure</option>
         </select>
       </Field>
+
+      {values.serviceType === LARGE_PROJECT_SERVICE_VALUE && (
+        <div className="flex items-start gap-3 rounded-lg border border-orange/30 bg-orange/5 px-4 py-3">
+          <svg
+            className="mt-0.5 h-5 w-5 flex-shrink-0 text-orange"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
+            <path d="M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2Z" />
+            <path d="m9 13.5 2 2 4-4.5" />
+          </svg>
+          <p className="text-sm text-foreground/80">
+            You&apos;re requesting: <strong>{LARGE_PROJECT_SERVICE_LABEL}</strong>.
+            We&apos;ll follow up to schedule an on-site assessment.
+          </p>
+        </div>
+      )}
 
       <Field
         label="Job Description"
@@ -549,11 +588,12 @@ export default function RequestForm() {
             onChange={(e) => updateField("consent", e.target.checked)}
             aria-required
             aria-invalid={errors.consent ? true : undefined}
-            aria-describedby={errors.consent ? "consent-error" : undefined}
+            aria-describedby={errors.consent ? "consent-error consent-help" : "consent-help"}
             className="mt-0.5 h-4 w-4 accent-forest"
           />
           <span>
-            I consent to be contacted about this request by phone, text, or email.{" "}
+            I consent to be contacted about this service request by phone,
+            text (SMS), or email.{" "}
             <span className="text-orange">*</span>
           </span>
         </label>
@@ -562,6 +602,18 @@ export default function RequestForm() {
             {errors.consent}
           </p>
         )}
+        <p id="consent-help" className="mt-1.5 text-xs text-foreground/60">
+          This consent covers communication about this specific request
+          only — not marketing messages. See our{" "}
+          <a href="/privacy" className="underline hover:text-forest">
+            Privacy Policy
+          </a>{" "}
+          and{" "}
+          <a href="/terms" className="underline hover:text-forest">
+            Terms of Service
+          </a>
+          . Message and data rates may apply; message frequency varies.
+        </p>
       </div>
 
       {/* Honeypot: hidden from sighted and keyboard/screen-reader users alike,

@@ -36,7 +36,7 @@ export const generalFaqs: FaqItem[] = [
   },
   {
     q: "What is included with tree removal?",
-    a: "A full removal — cutting, rigging, and safely lowering the tree in sections where needed — plus grinding the stump below grade and a complete cleanup, so you're left with a cleared, raked site rather than a pile of brush.",
+    a: "Tree removal includes the controlled removal of the agreed tree — cutting, rigging, and safely lowering it in sections where needed — plus cleanup within the approved scope. Stump grinding is available when included in the estimate or scheduled as a separate service.",
   },
   {
     q: "Do you remove and haul away debris?",
@@ -64,7 +64,7 @@ export const generalFaqs: FaqItem[] = [
   },
   {
     q: "What counties and towns do you serve?",
-    a: `We serve ${siteConfig.serviceArea}, including towns like Poughkeepsie, Fishkill, Wappingers Falls, Beacon, Cold Spring, Carmel, Mahopac, Brewster, Newburgh, Middletown, and Kingston. If you're nearby and not sure whether you're in range, just reach out.`,
+    a: `We serve ${siteConfig.serviceArea}, including towns like Middletown, Goshen, Newburgh, Wallkill, Beacon, Fishkill, Wappingers Falls, Poughkeepsie, LaGrange, and Hyde Park. If you're nearby and not sure whether you're in range, just reach out.`,
   },
   {
     q: "How does scheduling work after the estimate?",
@@ -72,8 +72,8 @@ export const generalFaqs: FaqItem[] = [
   },
   {
     q: "Is there a minimum project amount?",
-    a: `Projects are subject to a $${siteConfig.largeProjectCrew.minimumProject.toLocaleString(
+    a: `On-site estimates are free. JKE Tree & Crane specializes in professional, equipment-supported tree work, and our $${siteConfig.largeProjectCrew.minimumProject.toLocaleString(
       "en-US",
-    )} minimum investment so we can provide the experienced crew, specialized equipment, and professional service each job requires.`,
+    )} minimum project investment helps ensure that every scheduled project receives the appropriate crew, equipment, transportation, preparation, and level of service required to complete the work safely and efficiently. The minimum applies only to accepted and scheduled projects, not to the estimate itself.`,
   },
 ];

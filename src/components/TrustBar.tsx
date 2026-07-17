@@ -121,7 +121,7 @@ export default function TrustBar() {
             }`}
           >
             <span className="text-orange-light">{point.icon}</span>
-            <span className="text-sm font-semibold leading-tight text-white">
+            <span className="text-sm font-semibold leading-tight text-white/85">
               {point.label}
             </span>
           </li>

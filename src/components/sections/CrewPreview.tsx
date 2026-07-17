@@ -55,7 +55,7 @@ const highlights = [
 
 export default function CrewPreview() {
   return (
-    <Section className="grid gap-10 md:grid-cols-2 md:items-center">
+    <Section id="crew-preview" className="grid gap-10 md:grid-cols-2 md:items-center">
       <SlideIn className="relative aspect-[3/2] w-full overflow-hidden rounded-2xl shadow-lg">
         <Image
           src={crewTeamPhoto.src}
@@ -78,10 +78,11 @@ export default function CrewPreview() {
           reliable job.
         </p>
         <p className="mt-4 text-foreground/70">
-          Every job is handled by the same experienced crew — not a rotating
-          cast of subcontractors. They show up with the right equipment,
-          communicate clearly from the first call to final cleanup, and take
-          the same care around your property that they&apos;d want at home.
+          Every job is handled by experienced in-house crews and specialized
+          equipment — not a rotating cast of subcontractors. They show up
+          with the right equipment, communicate clearly from the first call
+          to final cleanup, and take the same care around your property
+          that they&apos;d want at home.
         </p>
 
         <ul className="mt-6 grid grid-cols-2 gap-x-4 gap-y-3">

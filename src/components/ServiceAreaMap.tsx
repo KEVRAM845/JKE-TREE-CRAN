@@ -1,4 +1,4 @@
-import { getGoogleMapsUrl, getMapEmbedUrl, siteConfig } from "@/lib/site-config";
+import { siteConfig } from "@/lib/site-config";
 
 interface ServiceAreaMapProps {
   /** Overrides the default "Areas We Serve" heading — e.g. for a service
@@ -8,30 +8,27 @@ interface ServiceAreaMapProps {
 }
 
 /**
- * Single reusable "where we work" block: a lazy-loaded map (broad
- * county-level view until a verified business address exists — see
- * siteConfig.serviceAreaMap), an "Open in Google Maps" link, and the
- * service-area text pulled from centralized config. Update the location once
- * in site-config.ts and every placement of this component updates together.
+ * Single reusable "where we work" block: a lazy-loaded map centered on
+ * siteConfig.serviceAreaMap.focusLocation (the business's primary service
+ * focus, not necessarily the mailing address), an "Open in Google Maps"
+ * link, and a hand-written service-area paragraph. Update the location or
+ * copy once here and every placement of this component updates together.
  */
 export default function ServiceAreaMap({ heading = "Areas We Serve", className }: ServiceAreaMapProps) {
-  const mapsUrl = getGoogleMapsUrl();
-  const embedUrl = getMapEmbedUrl();
-  const towns = siteConfig.serviceAreas.filter((entry) => !entry.includes("County"));
+  const focus = siteConfig.serviceAreaMap.focusLocation;
+  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(focus)}`;
+  const embedUrl = `https://www.google.com/maps?q=${encodeURIComponent(focus)}&output=embed`;
 
   return (
     <div className={className}>
       <h2 className="text-xl font-bold text-forest">{heading}</h2>
       <p className="mt-2 max-w-2xl text-foreground/70">
-        We serve {siteConfig.serviceArea}
-        {towns.length > 0 && (
-          <>
-            , including {towns.slice(0, -1).join(", ")}
-            {towns.length > 1 ? ", and " : ""}
-            {towns[towns.length - 1]}
-          </>
-        )}
-        .
+        Serving customers throughout Orange and Dutchess Counties, including
+        Middletown, Goshen, Chester, Monroe, Warwick, Montgomery, New
+        Windsor, Newburgh, Wallkill, Pine Bush, Washingtonville, Beacon,
+        Fishkill, East Fishkill, Hopewell Junction, Wappingers Falls,
+        Poughkeepsie, LaGrange, Pleasant Valley, Hyde Park, Pawling,
+        Millbrook, and surrounding communities.
       </p>
 
       <div className="mt-6 grid gap-4 md:grid-cols-2 md:items-start">
@@ -40,7 +37,7 @@ export default function ServiceAreaMap({ heading = "Areas We Serve", className }
             page weight until it's actually scrolled into view. */}
         <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-black/10 bg-black/[0.04] shadow-sm">
           <iframe
-            title={`Map of the area JKE Tree & Crane serves: ${siteConfig.serviceArea}`}
+            title={`Map of the area JKE Tree & Crane serves: ${focus}`}
             src={embedUrl}
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
@@ -50,8 +47,8 @@ export default function ServiceAreaMap({ heading = "Areas We Serve", className }
 
         <div className="flex flex-col gap-4">
           <p className="text-sm text-foreground/70">
-            Not sure if you&apos;re in range? Reach out — if you&apos;re
-            nearby, we can likely help.
+            Located nearby but not listed? Contact us to confirm availability
+            for your property.
           </p>
           <a
             href={mapsUrl}

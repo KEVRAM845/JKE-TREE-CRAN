@@ -4,7 +4,7 @@ import { siteConfig } from "@/lib/site-config";
 
 export default function CtaBanner() {
   return (
-    <section className="bg-orange">
+    <section id="cta-banner" className="bg-orange">
       <FadeIn className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-4 py-12 text-center sm:px-6 md:flex-row md:justify-between md:text-left">
         <div>
           <h2 className="text-2xl font-bold text-white sm:text-3xl">

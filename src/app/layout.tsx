@@ -25,7 +25,7 @@ const oswald = Oswald({
 });
 
 const description =
-  "Tree removal, tree trimming, stump grinding, crane and bucket truck service, and land clearing across Dutchess, Putnam, Orange, and Ulster Counties, NY.";
+  "Tree removal, tree trimming, stump grinding, crane and bucket truck service, and land clearing across Orange and Dutchess Counties, NY.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),

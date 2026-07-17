@@ -10,7 +10,7 @@ import { getEstimateHref, getGoogleMapsUrl, siteConfig } from "@/lib/site-config
 export const metadata: Metadata = {
   title: "Contact Us",
   description:
-    "Call, text, or email JKE Tree & Crane, or stop by our LaGrange, NY office. Serving Dutchess, Putnam, Orange, and Ulster Counties.",
+    "Call, text, or email JKE Tree & Crane, or stop by our LaGrange, NY office. Serving Orange and Dutchess Counties.",
   alternates: { canonical: "/contact" },
 };
 
@@ -61,7 +61,7 @@ export default function ContactPage() {
                   {siteConfig.phoneSecondary}
                 </a>
                 <span className="ml-2 text-sm text-foreground/50">
-                  (Additional Contact)
+                  (Secondary Office Line)
                 </span>
               </div>
             )}

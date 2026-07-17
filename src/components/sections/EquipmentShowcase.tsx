@@ -6,7 +6,7 @@ import { equipmentMedia } from "@/lib/media";
 
 export default function EquipmentShowcase() {
   return (
-    <Section>
+    <Section id="equipment">
       <SectionHeading
         title="Our Equipment"
         subtitle="Cranes, bucket trucks, grinders, and logging rigs — owned and operated in-house so we can take on the jobs others turn down."

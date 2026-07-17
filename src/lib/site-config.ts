@@ -44,13 +44,15 @@ export const siteConfig = {
   phoneHref: "tel:+18457210772",
   /** Same verified number as phoneHref — used for the "Text Us" action. */
   smsHref: "sms:+18457210772",
-  /** Confirmed additional line — labeled "Main Office" / "Additional Contact"
-   *  wherever both numbers are shown together. Does not replace `phone`. */
+  /** Confirmed additional line — labeled "Main Office" / "Secondary Office
+   *  Line" wherever both numbers are shown together. Does not replace
+   *  `phone`. Purpose of this line (e.g. estimates vs. scheduling) is not
+   *  yet confirmed, so it's labeled generically rather than guessed. */
   phoneSecondary: "845-337-7203",
   phoneSecondaryHref: "tel:+18453377203",
   email: "info@jketreeandcrane.com",
   usdot: "3497970",
-  serviceArea: "Dutchess, Putnam, Orange, and Ulster Counties",
+  serviceArea: "Orange and Dutchess Counties",
 
   /** Official crest logo. It's a white mark on a transparent background, so
    *  it only reads on a dark surface (the forest header badge, the forest
@@ -105,6 +107,11 @@ export const siteConfig = {
      *  Maps" button. null = falls back to a generated maps search using
      *  `address` (still accurate, just not a saved place link). */
     googleMapsUrl: null as string | null,
+    /** Where the "Areas We Serve" map/copy is centered — independent of the
+     *  office `address` above, since the two aren't the same place. Confirmed
+     *  business direction: work is focused primarily around this area rather
+     *  than the mailing address's immediate surroundings. */
+    focusLocation: "Middletown, NY",
   },
 
   // ---- About page statistics (R5). Every field defaults to null/hidden ----
@@ -130,22 +137,30 @@ export const siteConfig = {
   // Real towns only, e.g. ["Poughkeepsie, NY", "Beacon, NY"]. Empty = hidden.
   // Powers the LocalBusiness schema's areaServed (see JsonLd.tsx).
   serviceAreas: [
-    "Dutchess County, NY",
-    "Putnam County, NY",
     "Orange County, NY",
-    "Ulster County, NY",
-    "Poughkeepsie, NY",
-    "Fishkill, NY",
-    "Wappingers Falls, NY",
-    "Hopewell Junction, NY",
-    "Beacon, NY",
-    "Cold Spring, NY",
-    "Carmel, NY",
-    "Mahopac, NY",
-    "Brewster, NY",
-    "Newburgh, NY",
+    "Dutchess County, NY",
     "Middletown, NY",
-    "Kingston, NY",
+    "Goshen, NY",
+    "Chester, NY",
+    "Monroe, NY",
+    "Warwick, NY",
+    "Montgomery, NY",
+    "New Windsor, NY",
+    "Newburgh, NY",
+    "Wallkill, NY",
+    "Pine Bush, NY",
+    "Washingtonville, NY",
+    "Beacon, NY",
+    "Fishkill, NY",
+    "East Fishkill, NY",
+    "Hopewell Junction, NY",
+    "Wappingers Falls, NY",
+    "Poughkeepsie, NY",
+    "LaGrange, NY",
+    "Pleasant Valley, NY",
+    "Hyde Park, NY",
+    "Pawling, NY",
+    "Millbrook, NY",
   ] as string[],
 
   // ---- Reviews / social proof (R1). Empty = the section stays hidden -------
@@ -185,6 +200,17 @@ export type SiteConfig = typeof siteConfig;
  */
 export function getEstimateHref(): string {
   return siteConfig.jobber.requestFormUrl ?? "/request-service";
+}
+
+/**
+ * Where a Large Project Daily Crew assessment CTA should go. Same
+ * Jobber-first fallback as getEstimateHref(), but — while Jobber isn't
+ * connected — routes to the site's own request form with the Large Project
+ * option preselected via query param. Once a real Jobber URL is set, that
+ * takes over unchanged (we don't control query params on an external form).
+ */
+export function getLargeProjectEstimateHref(): string {
+  return siteConfig.jobber.requestFormUrl ?? "/request-service?service=large-project";
 }
 
 /**

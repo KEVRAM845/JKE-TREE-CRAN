@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import CtaBanner from "@/components/CtaBanner";
 import Credentials from "@/components/Credentials";
 import Faq from "@/components/Faq";
+import FeaturedVideo from "@/components/FeaturedVideo";
 import MediaVideo from "@/components/MediaVideo";
 import ServiceAreaMap from "@/components/ServiceAreaMap";
 import ServiceJsonLd from "@/components/ServiceJsonLd";
@@ -69,15 +70,42 @@ export default async function ServicePage({
   return (
     <>
       <section className="relative flex h-72 items-end overflow-hidden sm:h-96">
-        <Image
-          src={service.heroImage}
-          alt={service.heroImageAlt}
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-          style={service.heroImagePosition ? { objectPosition: service.heroImagePosition } : undefined}
-        />
+        {service.heroFillMode === "blurred-contain" ? (
+          <>
+            {/* Blurred, oversized copy of the same photo fills the banner
+                edge to edge so the sharp foreground below never needs to
+                crop the subject to avoid empty side gaps. */}
+            <Image
+              src={service.heroImage}
+              alt=""
+              aria-hidden="true"
+              fill
+              sizes="100vw"
+              className="scale-125 object-cover blur-2xl brightness-[0.55] saturate-150"
+            />
+            {/* Sharp, uncropped photo — object-contain shows the entire
+                frame (subject, branch, surrounding tree) rather than the
+                thin slice a "cover" crop would leave for a 9:16 source in
+                this short, wide box. */}
+            <Image
+              src={service.heroImage}
+              alt={service.heroImageAlt}
+              fill
+              priority
+              sizes="100vw"
+              className="object-contain"
+            />
+          </>
+        ) : (
+          <Image
+            src={service.heroImage}
+            alt={service.heroImageAlt}
+            fill
+            priority
+            sizes="100vw"
+            className={`object-cover ${service.heroImagePosition ?? ""}`.trim()}
+          />
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
         <div className="relative mx-auto w-full max-w-6xl px-4 pb-10 sm:px-6">
           <nav aria-label="Breadcrumb" className="text-sm text-white/80">
@@ -105,6 +133,15 @@ export default async function ServicePage({
 
         <Credentials className="mt-8" />
         <MinimumProjectNotice className="mt-4" />
+
+        {service.featuredVideo && (
+          <FeaturedVideo
+            className="mt-12"
+            title={service.featuredVideo.title}
+            caption={service.featuredVideo.caption}
+            video={service.featuredVideo.video}
+          />
+        )}
 
         <h2 className="mt-12 text-xl font-bold text-forest">What&apos;s Included</h2>
         <ul className="mt-4 grid gap-4 sm:grid-cols-2">

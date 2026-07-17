@@ -92,7 +92,7 @@ export default function TrustSignals({ onDark = false, className }: TrustSignals
             {item.icon}
           </span>
           <span
-            className={`text-sm font-semibold leading-tight ${onDark ? "text-white" : "text-forest"}`}
+            className={`text-sm font-semibold leading-tight ${onDark ? "text-white/85" : "text-forest"}`}
           >
             {item.label}
           </span>

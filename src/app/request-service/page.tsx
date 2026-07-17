@@ -12,7 +12,13 @@ export const metadata: Metadata = {
   alternates: { canonical: "/request-service" },
 };
 
-export default function RequestServicePage() {
+export default async function RequestServicePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ service?: string }>;
+}) {
+  const { service } = await searchParams;
+
   return (
     <section className="mx-auto max-w-2xl px-4 py-12 sm:px-6">
       <h1 className="text-3xl font-extrabold text-forest sm:text-4xl">Request Service</h1>
@@ -29,10 +35,10 @@ export default function RequestServicePage() {
       </p>
 
       <TrustSignals className="mt-8" />
-      <MinimumProjectNotice className="mt-6" />
+      <MinimumProjectNotice emphasize className="mt-6" />
 
       <div className="mt-8">
-        <RequestForm />
+        <RequestForm initialService={service} />
       </div>
 
       <div className="mt-16 border-t border-black/10 pt-10">

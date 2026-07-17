@@ -27,9 +27,9 @@ export default function Footer() {
             Serving {siteConfig.serviceArea}
           </p>
           <p className="mt-1 text-sm text-white/50">
-            Including Poughkeepsie, Fishkill, Wappingers Falls, Hopewell Junction,
-            Beacon, Cold Spring, Carmel, Mahopac, Brewster, Newburgh, Middletown, and
-            Kingston.
+            Including Middletown, Goshen, Newburgh, Wallkill, Beacon, Fishkill,
+            Wappingers Falls, Poughkeepsie, LaGrange, Hyde Park, and
+            surrounding communities.
           </p>
           {siteConfig.address && (
             <a
@@ -127,7 +127,7 @@ export default function Footer() {
                 className="block transition-colors hover:text-orange-light"
               >
                 {siteConfig.phoneSecondary}{" "}
-                <span className="text-white/50">(Additional Contact)</span>
+                <span className="text-white/50">(Secondary Office Line)</span>
               </a>
             )}
             <a
@@ -148,7 +148,18 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-white/10 px-4 py-4 text-center text-xs text-white/50 sm:px-6">
-        &copy; {year} {siteConfig.legalName} All rights reserved.
+        <p>
+          &copy; {year} {siteConfig.legalName} All rights reserved.
+        </p>
+        <p className="mt-1.5 flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+          <Link href="/privacy" className="transition-colors hover:text-white/80">
+            Privacy Policy
+          </Link>
+          <span aria-hidden="true">&middot;</span>
+          <Link href="/terms" className="transition-colors hover:text-white/80">
+            Terms of Service
+          </Link>
+        </p>
       </div>
     </footer>
   );

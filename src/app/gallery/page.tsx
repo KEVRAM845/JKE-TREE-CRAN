@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import GalleryGrid from "@/components/GalleryGrid";
+import CaseStudy45Min from "@/components/sections/CaseStudy45Min";
 import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
@@ -19,7 +20,12 @@ export default function GalleryPage() {
         Real photos and video from our crews on real jobs across{" "}
         {siteConfig.serviceArea}. Filter by the type of work below.
       </p>
-      <div className="mt-8">
+      <div className="mt-12 border-t border-black/10 pt-12">
+        <CaseStudy45Min />
+      </div>
+
+      <div id="all-projects" className="mt-16 border-t border-black/10 pt-12">
+        <h2 className="text-2xl font-bold text-forest">All Projects</h2>
         <GalleryGrid />
       </div>
     </section>

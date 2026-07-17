@@ -9,14 +9,13 @@ import { services } from "@/lib/services";
 import { siteConfig } from "@/lib/site-config";
 
 const navLinks = [
-  { href: "/", label: "Home" },
   { href: "/#services", label: "Services" },
-  { href: "/about", label: "About" },
-  { href: "/crew", label: "Crew" },
+  { href: "/#large-project-crew", label: "Large Projects" },
   { href: "/gallery", label: "Gallery" },
+  { href: "/about", label: "About" },
   { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
-  { href: "/request-service", label: "Request Service" },
+  { href: "/request-service", label: "Request Estimate" },
 ];
 
 export default function Header() {
@@ -150,13 +149,6 @@ export default function Header() {
                 <p className="px-2 pb-2 text-xs font-semibold uppercase tracking-wide text-foreground/60">
                   Services
                 </p>
-                <Link
-                  href="/#large-project-crew"
-                  className="block rounded-md px-2 py-2.5 text-sm font-semibold text-forest transition-colors hover:bg-black/5"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  Large Projects
-                </Link>
                 {services.map((service) => (
                   <Link
                     key={service.slug}

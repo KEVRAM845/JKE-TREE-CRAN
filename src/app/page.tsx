@@ -8,6 +8,7 @@ import LargeProjectCrew from "@/components/sections/LargeProjectCrew";
 import EmergencyStorm from "@/components/sections/EmergencyStorm";
 import FeaturedProject from "@/components/sections/FeaturedProject";
 import VideoReel from "@/components/sections/VideoReel";
+import CaseStudyPreview from "@/components/sections/CaseStudyPreview";
 import EquipmentShowcase from "@/components/sections/EquipmentShowcase";
 import HowItWorks from "@/components/sections/HowItWorks";
 import Reviews from "@/components/sections/Reviews";
@@ -17,6 +18,7 @@ import { StaggerContainer } from "@/components/motion/Stagger";
 import { Section } from "@/components/ui/Section";
 import { services } from "@/lib/services";
 import { heroImage, whyChooseImage } from "@/lib/media";
+import { siteConfig } from "@/lib/site-config";
 
 const whyChooseUs = [
   "Crane and bucket truck equipment for tall or hard-to-reach trees",
@@ -59,35 +61,79 @@ export default function Home() {
           <h2 className="text-3xl font-extrabold text-forest sm:text-4xl">Our Services</h2>
           <p className="mt-2 text-foreground/70">
             Tree removal, trimming, stump grinding, crane work, and land clearing —
-            handled by the same crew, start to finish, from Poughkeepsie to Kingston.
+            handled by experienced in-house crews, start to finish, from Middletown to Poughkeepsie.
           </p>
         </SlideIn>
         <StaggerContainer className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {services.map((service, index) => {
-            // An odd service count leaves a single orphaned card at the
-            // 2-column tablet breakpoint, and (for exactly 5 services) a
-            // half-empty final row at the 3-column desktop breakpoint —
-            // let the last card fill the remaining space at both instead of
-            // leaving a visibly empty slot beside it.
-            const isOrphan = index === services.length - 1 && services.length % 2 === 1;
-            const isDesktopRowGap =
-              index === services.length - 1 && services.length % 3 === 2;
-            return (
-              <ServiceCard
-                key={service.slug}
-                service={service}
-                index={index}
-                className={
-                  [
-                    isOrphan ? "sm:col-span-2" : "",
-                    isDesktopRowGap ? "lg:col-span-2" : "",
-                  ]
-                    .filter(Boolean)
-                    .join(" ") || undefined
-                }
-              />
-            );
-          })}
+          {(() => {
+            // A service count that leaves exactly 2 cards in the final
+            // 3-column desktop row (5 services today) used to stretch the
+            // last card across both empty slots — unbalanced, one normal
+            // card next to one double-wide one. Instead, insert the crest
+            // logo as its own grid cell between the last two cards, so that
+            // row reads as card / logo / card, and the total count becomes
+            // evenly divisible by both 2 and 3 — no orphan-spanning needed
+            // at any breakpoint.
+            const needsLogoSlot = services.length % 3 === 2;
+            type GridEntry =
+              | { kind: "service"; service: (typeof services)[number] }
+              | { kind: "logo" };
+            const gridEntries: GridEntry[] = services.map((service) => ({
+              kind: "service",
+              service,
+            }));
+            if (needsLogoSlot) {
+              gridEntries.splice(services.length - 1, 0, { kind: "logo" });
+            }
+
+            const total = gridEntries.length;
+            return gridEntries.map((entry, index) => {
+              const isOrphan = index === total - 1 && total % 2 === 1;
+              const isDesktopRowGap = index === total - 1 && total % 3 === 2;
+              const spanClassName =
+                [isOrphan ? "sm:col-span-2" : "", isDesktopRowGap ? "lg:col-span-2" : ""]
+                  .filter(Boolean)
+                  .join(" ") || undefined;
+
+              if (entry.kind === "logo") {
+                return (
+                  <div
+                    key="services-logo"
+                    // Only shown at the true 3-column desktop grid (lg+),
+                    // where it sits in a row alongside two cards of similar
+                    // height. At the sm-only 2-column tablet width the grid
+                    // pairs it with a full-height card instead, stretching
+                    // this cell to match and leaving the small centered
+                    // badge looking like an orphaned blank slot rather than
+                    // an intentional tile — so it stays hidden through that
+                    // range and only appears once the intended layout does.
+                    className="hidden items-center justify-center lg:flex"
+                    aria-hidden="true"
+                  >
+                    <span className="flex h-24 w-24 items-center justify-center rounded-full bg-forest p-4 shadow-sm lg:h-28 lg:w-28">
+                      <Image
+                        src={siteConfig.logo.src}
+                        alt=""
+                        width={siteConfig.logo.width}
+                        height={siteConfig.logo.height}
+                        className="h-full w-full object-contain"
+                      />
+                    </span>
+                  </div>
+                );
+              }
+
+              const serviceIndex = services.indexOf(entry.service);
+              return (
+                <ServiceCard
+                  key={entry.service.slug}
+                  service={entry.service}
+                  index={serviceIndex}
+                  className={spanClassName}
+                />
+              );
+            });
+          })()}
         </StaggerContainer>
         <MinimumProjectNotice className="mt-10 text-center" />
       </Section>
@@ -135,6 +181,7 @@ export default function Home() {
       <EmergencyStorm />
       <FeaturedProject />
       <VideoReel />
+      <CaseStudyPreview />
       <EquipmentShowcase />
       <HowItWorks />
       <Reviews />

@@ -1,4 +1,6 @@
 import type { FaqItem } from "@/components/Faq";
+import type { VideoAsset } from "@/lib/media";
+import { videoLandClearingAction } from "@/lib/media";
 
 export interface ProcessStep {
   title: string;
@@ -12,14 +14,32 @@ export interface Service {
   summary: string;
   heroImage: string;
   heroImageAlt: string;
-  /** CSS object-position for the hero banner's tight, wide crop. Defaults to
-   *  centered when omitted — only set this when the subject sits off-center
-   *  in the source photo (e.g. equipment near one edge) and the default crop
-   *  would cut it out of the banner. */
+  /** Tailwind `object-[...]` position utility classes for the hero banner's
+   *  tight, wide crop — e.g. `"object-[50%_60%] sm:object-[50%_55%]"`.
+   *  Responsive because the banner's fixed pixel height (h-72/h-96) combined
+   *  with a 100vw-wide image means wider viewports scale the photo larger
+   *  and crop a proportionally smaller vertical slice — the same position
+   *  value doesn't always keep the subject framed the same way at every
+   *  width. Defaults to centered when omitted. Applied via className, not
+   *  inline style, specifically so the sm:/lg: variants can take effect. */
   heroImagePosition?: string;
+  /** "cover" (default) crops the source photo to fill the hero banner edge
+   *  to edge. "blurred-contain" instead shows the *entire* source image
+   *  uncropped (object-contain) as a sharp centered strip, with a blurred,
+   *  scaled-up copy of the same image filling the leftover space on either
+   *  side — for a source photo whose aspect ratio is too extreme (e.g. a
+   *  tall portrait video frame) for "cover" to show enough of the subject
+   *  in this banner's short, wide box without cropping out most of it.
+   *  Same file both times — not a different image, just a different fit. */
+  heroFillMode?: "cover" | "blurred-contain";
   bullets: string[];
   // Optional depth content — rendered on the service page only when present.
   equipment?: string[];
+  /** Optional prominent single-video callout, rendered between the intro and
+   *  "What's Included" — for a service with a strong piece of real action
+   *  footage worth featuring on its own rather than folded into the generic
+   *  "More From This Work" grid below. */
+  featuredVideo?: { title: string; caption: string; video: VideoAsset };
   faqs?: FaqItem[];
   /** Overrides the shared process/expect/safety defaults if a service needs to. */
   process?: ProcessStep[];
@@ -74,14 +94,15 @@ export const services: Service[] = [
     title: "Tree Removal",
     navLabel: "Tree Removal",
     summary:
-      "When a tree has to come down, it comes down clean. We handle everything from a single dead or hazardous tree to a full-property clearing — roped and rigged, sectioned safely, and lowered without touching what's around it. Every removal ends with the stump ground below grade and the site raked out, not just a pile of brush left behind.",
+      "When a tree has to come down, it comes down clean. We handle everything from a single dead or hazardous tree to a full-property clearing — roped and rigged, sectioned safely, and lowered without touching what's around it. Tree removal includes the controlled removal of the agreed tree and cleanup within the approved scope; stump grinding is available when included in the estimate or scheduled as a separate service.",
     heroImage: "/images/bucket-truck-hazard-removal.jpg",
     heroImageAlt: "Bucket truck crew removing a large hazardous tree",
     // The source photo is a wide, close-to-square shot with the bucket truck
     // and worker aloft near the top — a centered crop of this banner's very
     // short aspect ratio cuts both out and shows mostly canopy. Biasing the
-    // crop toward the top keeps the actual work in frame.
-    heroImagePosition: "50% 15%",
+    // crop toward the top keeps the actual work in frame, nudged slightly
+    // tighter as the banner scales wider and the visible band narrows.
+    heroImagePosition: "object-[50%_18%] sm:object-[50%_15%] lg:object-[50%_12%]",
     bullets: [
       "Full tree removal, from single trees to multiple-tree jobs",
       "Hazardous, dead, and storm-damaged tree take-downs",
@@ -119,8 +140,15 @@ export const services: Service[] = [
     navLabel: "Trimming & Pruning",
     summary:
       "Healthy trees start with the right cuts. We prune for shape, clearance, and long-term structure — removing deadwood, thinning heavy canopies before storm season, and lifting limbs off roofs, wires, and driveways. It's the maintenance that keeps a bigger, more expensive problem from showing up later.",
-    heroImage: "/images/bucket-truck-pine-removal.jpg",
-    heroImageAlt: "Crew member trimming a tall pine tree from a bucket truck",
+    heroImage: "/videos/posters/bucket-truck-power-line-trim.jpg",
+    heroImageAlt: "JKE crew member trimming limbs from a bucket truck while ground crew clears debris below",
+    // Video-frame extraction, portrait 540x960 (9:16) — the most extreme
+    // aspect ratio of any hero photo on the site. In this banner's short,
+    // wide box a plain "cover" crop (even with tuned object-position) can
+    // only ever show ~15-40% of the image's height depending on viewport
+    // width, cropping out most of the worker, the branch, and the
+    // surrounding tree. blurred-contain shows the whole frame instead.
+    heroFillMode: "blurred-contain",
     bullets: [
       "Deadwooding and canopy thinning",
       "Clearance trimming near rooflines and power lines",
@@ -176,6 +204,11 @@ export const services: Service[] = [
       "A stump left behind is still a job half-finished. We grind it below grade with equipment sized to the stump — small enough to fit through a gate, powerful enough to finish in one visit — so the spot can be seeded, sodded, or built on without a mower deck-breaker waiting in the grass. Every grind includes cleanup, so you're left with a level, usable yard, not a pile of chips to deal with yourself.",
     heroImage: "/images/stump-grinder-fresh-cut.jpg",
     heroImageAlt: "Vermeer stump grinder beside a large, freshly cut tree stump",
+    // The grinder and stump sit in the lower two-thirds of this portrait
+    // photo — a centered crop in the short banner shows mostly treeline
+    // above and crops the equipment itself. Biasing down keeps it in frame,
+    // nudged further down as the banner scales wider and the band narrows.
+    heroImagePosition: "object-[50%_60%] sm:object-[50%_65%] lg:object-[50%_68%]",
     bullets: [
       "Grinding below grade for a clean, level yard",
       "Root flare and surface root grinding",
@@ -198,7 +231,7 @@ export const services: Service[] = [
       },
       {
         q: "Can you grind hard-to-reach stumps?",
-        a: "In most cases, yes — including tighter backyards around Carmel, Mahopac, and Brewster. We'll confirm access during the estimate.",
+        a: "In most cases, yes — including tighter backyards around Goshen, Chester, and Monroe. We'll confirm access during the estimate.",
       },
     ],
     process: [
@@ -232,8 +265,14 @@ export const services: Service[] = [
     navLabel: "Crane & Bucket Truck",
     summary:
       "Some trees are too big, too close to the house, or too far back to climb safely. Our crane and bucket trucks lift whole sections out over rooftops and set them down exactly where we want them — the safest, fastest way to handle the removals other companies turn down. When there's no room for error, precision equipment isn't optional.",
-    heroImage: "/images/crane-truck-forest-road.jpg",
-    heroImageAlt: "Crane truck positioned on a forest road for a tree removal",
+    heroImage: "/images/crew-trucks-lot-sunset.jpg",
+    heroImageAlt: "Two JKE bucket trucks parked together in a lot at sunset",
+    // Square (1600x1600) source with both trucks sitting in the lower-middle
+    // band and open sky above. Wider breakpoints scale the square source up
+    // to fill a proportionally shorter banner, so the crop is nudged
+    // progressively lower to keep both trucks framed instead of drifting
+    // toward showing more sky.
+    heroImagePosition: "object-[50%_55%] sm:object-[50%_58%] lg:object-[50%_62%]",
     bullets: [
       "Precision crane-assisted tree take-downs",
       "Aerial bucket truck access for tall or hard-to-reach trees",
@@ -253,7 +292,7 @@ export const services: Service[] = [
       },
       {
         q: "Is crane work safe near my home?",
-        a: "It's often the safest option. Loads are controlled and lifted away from structures rather than felled toward them — a common need on the tighter, hillside properties around Cold Spring and Beacon.",
+        a: "It's often the safest option. Loads are controlled and lifted away from structures rather than felled toward them — a common need on the tighter, hillside properties around Warwick and Beacon.",
       },
       {
         q: "Do you handle setup and access?",
@@ -269,6 +308,12 @@ export const services: Service[] = [
       "Some jobs are bigger than a single tree — clearing a building site, opening up a trail, or taking down leaning and storm-split timber that's too dangerous to leave standing. Our log trucks and grapple gear move big timber off a property fast, and usable hardwood goes to the mill instead of rotting in a pile. We size the job to the property, not the other way around.",
     heroImage: "/images/land-clearing-vista.jpg",
     heroImageAlt: "Freshly cleared hilltop lot with open valley views after forestry work",
+    // A very tall, narrow source photo — the cleared field and valley view
+    // sit in the upper-middle band, with out-of-focus equipment filling the
+    // immediate foreground at the bottom. Biasing up toward that band keeps
+    // the actual view (the point of this photo) in the short hero banner,
+    // nudged slightly up as the banner scales wider and the band narrows.
+    heroImagePosition: "object-[50%_45%] sm:object-[50%_42%] lg:object-[50%_38%]",
     bullets: [
       "Site clearing for construction and development",
       "Selective timber removal and logging",
@@ -310,7 +355,7 @@ export const services: Service[] = [
       {
         title: "Site Left Ready",
         description:
-          "We finish with a cleared, graded site — ready for building, planting, or whatever comes next.",
+          "Once the agreed clearing work is complete, the work area can be left cleared and graded. Backfill, imported material, excavation, drainage work, and additional site preparation are not included unless separately evaluated and quoted.",
       },
     ],
     safety: [
@@ -319,6 +364,12 @@ export const services: Service[] = [
       "Leaning and storm-damaged trees get assessed and handled before general clearing starts.",
       "Ground crews maintain clear communication and controlled work zones throughout the job.",
     ],
+    featuredVideo: {
+      title: "Land Clearing in Action",
+      caption:
+        "See JKE Tree & Crane working through an active clearing project using professional equipment and a coordinated crew.",
+      video: videoLandClearingAction,
+    },
   },
 ];
 

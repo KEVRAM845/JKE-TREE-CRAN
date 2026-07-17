@@ -71,7 +71,7 @@ export const stumpGrinderFreshCut: ImageAsset = {
   orientation: "landscape",
 };
 
-const crewBuckingLogs: ImageAsset = {
+export const crewBuckingLogs: ImageAsset = {
   type: "image",
   src: "/images/crew-bucking-logs.jpg",
   alt: "JKE crew member in hearing and face protection cutting large oak logs into rounds",
@@ -95,7 +95,7 @@ const craneOverRoof2: ImageAsset = {
   orientation: "portrait",
 };
 
-const landClearingVista: ImageAsset = {
+export const landClearingVista: ImageAsset = {
   type: "image",
   src: "/images/land-clearing-vista.jpg",
   alt: "Freshly cleared hilltop lot with open valley views after forestry work",
@@ -112,10 +112,10 @@ const craneTruckForestRoad: ImageAsset = {
   orientation: "portrait",
 };
 
-const crewTrucksSunset: ImageAsset = {
+export const crewTrucksSunset: ImageAsset = {
   type: "image",
   src: "/images/crew-trucks-lot-sunset.jpg",
-  alt: "JKE bucket and crane trucks lined up at sunset",
+  alt: "Two JKE bucket trucks parked together in a lot at sunset",
   categories: ["equipment"],
   orientation: "square",
 };
@@ -225,7 +225,7 @@ const emergencyNightImage: ImageAsset = {
   orientation: "portrait",
 };
 
-const craneLiftingBranchHouse: ImageAsset = {
+export const craneLiftingBranchHouse: ImageAsset = {
   type: "image",
   src: "/images/crane-lifting-branch-house.jpg",
   alt: "A JKE crane truck lifting a limb off a rooftop at dusk while a crew member cuts from above",
@@ -299,6 +299,14 @@ export const whiteTruckChipper: ImageAsset = {
   type: "image",
   src: "/images/white-truck-chipper.jpg",
   alt: "JKE's chip truck and Vermeer chipper staged on a job site",
+  categories: ["equipment"],
+  orientation: "landscape",
+};
+
+export const blackHighCapacityChipper: ImageAsset = {
+  type: "image",
+  src: "/images/black-high-capacity-chipper.jpg",
+  alt: "JKE Tree & Crane high-capacity wood chipper used for large residential and property cleanup projects",
   categories: ["equipment"],
   orientation: "landscape",
 };
@@ -522,7 +530,7 @@ const videoPineTreeRopeRiggingWinter: VideoAsset = {
   orientation: "portrait",
 };
 
-const videoTreeRemovalCleanupResult: VideoAsset = {
+export const videoTreeRemovalCleanupResult: VideoAsset = {
   type: "video",
   src: "/videos/tree-removal-cleanup-result.mp4",
   poster: "/videos/posters/tree-removal-cleanup-result.jpg",
@@ -549,6 +557,98 @@ const videoCrewMemberFelledTree: VideoAsset = {
   orientation: "portrait",
 };
 
+// New action footage (Large Project / land clearing / case-study phase) -------
+
+export const videoLoaderChipperAction: VideoAsset = {
+  type: "video",
+  src: "/videos/loader-high-capacity-chipper.mp4",
+  poster: "/videos/posters/loader-high-capacity-chipper.jpg",
+  alt: "An articulating loader feeding material into JKE's high-capacity chipper during a coordinated property cleanup project",
+  categories: ["equipment", "land-clearing"],
+  orientation: "portrait",
+};
+
+export const videoLandClearingAction: VideoAsset = {
+  type: "video",
+  src: "/videos/land-clearing-action.mp4",
+  poster: "/videos/posters/land-clearing-action.jpg",
+  alt: "JKE Tree & Crane crew and equipment actively working through a land clearing project",
+  categories: ["land-clearing"],
+  orientation: "portrait",
+};
+
+export const videoPullingTreeTopAction: VideoAsset = {
+  type: "video",
+  src: "/videos/pulling-tree-top-action.mp4",
+  poster: "/videos/posters/pulling-tree-top-action.jpg",
+  alt: "JKE Tree & Crane crew completing a controlled tree-top removal using professional rigging",
+  categories: ["tree-removal"],
+  orientation: "portrait",
+};
+
+// 45-Minute Case Study — four chronological stages of one real residential job.
+export interface CaseStudyStage {
+  stage: "Before" | "Work Begins" | "Progress" | "Completed";
+  title: string;
+  caption: string;
+  video: VideoAsset;
+}
+
+export const caseStudy45Min: CaseStudyStage[] = [
+  {
+    stage: "Before",
+    title: "Before",
+    caption: "Initial site and tree condition ahead of the approved work.",
+    video: {
+      type: "video",
+      src: "/videos/forty-five-minute-job-before.mp4",
+      poster: "/videos/posters/forty-five-minute-job-before.jpg",
+      alt: "Initial site and tree condition before a JKE Tree & Crane residential project begins",
+      categories: ["tree-removal"],
+      orientation: "portrait",
+    },
+  },
+  {
+    stage: "Work Begins",
+    title: "Work Begins",
+    caption: "The crew and equipment begin the approved work.",
+    video: {
+      type: "video",
+      src: "/videos/forty-five-minute-job-progress-one.mp4",
+      poster: "/videos/posters/forty-five-minute-job-progress-one.jpg",
+      alt: "JKE Tree & Crane crew and equipment beginning approved work on a residential tree project",
+      categories: ["tree-removal"],
+      orientation: "portrait",
+    },
+  },
+  {
+    stage: "Progress",
+    title: "Progress",
+    caption: "Controlled removal and cleanup in progress.",
+    video: {
+      type: "video",
+      src: "/videos/forty-five-minute-job-progress-two.mp4",
+      poster: "/videos/posters/forty-five-minute-job-progress-two.jpg",
+      alt: "Controlled tree removal and cleanup in progress during a JKE Tree & Crane residential project",
+      categories: ["tree-removal"],
+      orientation: "portrait",
+    },
+  },
+  {
+    stage: "Completed",
+    title: "Completed",
+    caption: "Final property condition after cleanup.",
+    video: {
+      type: "video",
+      src: "/videos/forty-five-minute-job-after.mp4",
+      poster: "/videos/posters/forty-five-minute-job-after.jpg",
+      alt: "Final cleaned-up property condition after a JKE Tree & Crane residential tree project",
+      categories: ["tree-removal"],
+      orientation: "portrait",
+    },
+  },
+];
+
 // ---- Homepage section picks -------------------------------------------------
 
 // Widest, most complete crane composition in the library — full boom, the
@@ -571,7 +671,11 @@ export const featuredProject = {
 
 export const actionVideos: VideoAsset[] = [
   videoStumpAction,
-  videoLandClearing,
+  // Controlled tree-top removal — replaces the previous land-clearing clip
+  // in this slot (land clearing now has its own featured video on the Land
+  // Clearing & Logging service page instead). videoLandClearing itself stays
+  // in the Gallery archive below, just no longer duplicated in this reel.
+  videoPullingTreeTopAction,
   videoClimber,
   // Rope rigging in control — a second worker manages the line as the
   // section comes down, a distinct capability from the climber clip above.

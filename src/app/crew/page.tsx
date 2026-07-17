@@ -12,7 +12,7 @@ import { siteConfig } from "@/lib/site-config";
 export const metadata: Metadata = {
   title: "Meet the Crew",
   description:
-    "Meet the experienced, local crew behind JKE Tree & Crane — safety-focused professionals serving Dutchess, Putnam, Orange, and Ulster Counties, NY.",
+    "Meet the experienced, local crew behind JKE Tree & Crane — safety-focused professionals serving Orange and Dutchess Counties, NY.",
   alternates: { canonical: "/crew" },
 };
 
@@ -139,8 +139,8 @@ export default function CrewPage() {
           </h1>
           <p className="mt-4 text-lg text-foreground/70">
             Experienced, local professionals who show up prepared, work safely, and
-            treat every property like their own — serving homeowners across
-            Dutchess, Putnam, Orange, and Ulster Counties.
+            treat every property like their own — serving homeowners across{" "}
+            {siteConfig.serviceArea}.
           </p>
           <div className="mt-6 flex justify-center">
             <ButtonLink href="/request-service">Request a Free Estimate</ButtonLink>
@@ -174,8 +174,8 @@ export default function CrewPage() {
             <p>
               We show up with the right equipment for the job, communicate clearly
               from the first phone call through cleanup, and leave your property the
-              way we found it — or better. It&apos;s the same crew on every job, and
-              every one of them takes pride in the work.
+              way we found it — or better. Every one of our experienced in-house
+              crew members takes pride in the work.
             </p>
           </div>
           <ul className="mt-6 space-y-3">
@@ -183,7 +183,7 @@ export default function CrewPage() {
               "Clear communication from arrival through cleanup",
               "Careful, respectful work around homes and landscaping",
               "Full debris cleanup on every job — no mess left behind",
-              "The same experienced hands, job after job",
+              "Experienced in-house crews and specialized equipment",
             ].map((point) => (
               <li key={point} className="flex gap-3">
                 <svg
@@ -267,8 +267,8 @@ export default function CrewPage() {
             Ready to work with a crew you can trust?
           </h2>
           <p className="max-w-xl text-white/90">
-            Tell us about the job and we&apos;ll send the same experienced crew you
-            just met — no subcontractors, no surprises.
+            Tell us about the job and we&apos;ll send an experienced in-house
+            crew with the right equipment — no subcontractors, no surprises.
           </p>
           <div className="mt-2 flex flex-col gap-3 sm:flex-row">
             <ButtonLink href="/request-service" variant="forest">
